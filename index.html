@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NPB Standings</title>
+    <style>
+      .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .standingsCanvas {
+        max-width: 1000px;
+        max-height: 600px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <canvas id="clStandings" class="standingsCanvas"></canvas>
+      <canvas id="plStandings" class="standingsCanvas"></canvas>
+      <canvas id="opStandings" class="standingsCanvas"></canvas>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script type="module">
+      const drawStandings = (elementId, standings) => {
+        const ctx = document.getElementById(elementId);
+        new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: standings.map(team => team.name),
+            datasets: [{
+              label: '貯金',
+              data: standings.map(team => team.win - team.lose),
+              borderWidth: 1
+            }]
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            }
+          }
+        });
+      }
+
+      import cl from "./output/CL.json" assert { type: "json" };
+      import pl from "./output/PL.json" assert { type: "json" };
+      import op from "./output/OP.json" assert { type: "json" };
+      drawStandings('clStandings', cl);
+      drawStandings('plStandings', pl);
+      drawStandings('opStandings', op);
+    </script>
+  </body>
+</html>

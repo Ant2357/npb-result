@@ -9,7 +9,7 @@ git clone https://github.com/Ant2357/npb-web-scraping.git
 cd npb-web-scraping
 node main.js
 ```
-#### Result
+## Result
 ```
 [
   {
@@ -53,6 +53,12 @@ node main.js
   .
 ]
 ```
+
+## View Savings Graphs
+```bash
+npx serve
+```
+![貯金グラフの画面](example.png "貯金グラフの画面")
 
 ## Author
 [@ant2357](https://twitter.com/ant2357)

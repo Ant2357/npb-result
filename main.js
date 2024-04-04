@@ -1,5 +1,5 @@
 const fs = require("fs");
-const npb = require("./npb");
+const npb = require("./npb/webScraping");
 
 const jsonOutput = (url, data) => {
   fs.writeFile(url, JSON.stringify(data, null, "  "), err => {

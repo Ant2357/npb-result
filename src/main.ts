@@ -1,7 +1,8 @@
-const fs = require("fs");
-const npb = require("./npb/webScraping");
+import fs from "fs";
+import { BaseballTeam } from "./npb/baseballTeam";
+import * as npb from "./npb/webScraping";
 
-const jsonOutput = (url, data) => {
+const jsonOutput = (url: string, data: BaseballTeam[]) => {
   fs.writeFile(url, JSON.stringify(data, null, "  "), err => {
     if (err) {
       throw err

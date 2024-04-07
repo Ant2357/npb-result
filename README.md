@@ -7,7 +7,9 @@ npb-web-scraping
 ```bash
 git clone https://github.com/Ant2357/npb-web-scraping.git
 cd npb-web-scraping
-node main.js
+npm i
+npm run build
+node ./lib/main.js
 ```
 ## Result
 ```

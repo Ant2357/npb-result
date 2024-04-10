@@ -15,6 +15,7 @@ export class BaseballTeam {
   sb: number;
   avg: number;
   era: number;
+  e: number;
   pythagenPat: number;
   // Webスクレイピング先に無い独自値
   // Pythagenpat(ピタゴラス勝率の改良型)
@@ -27,7 +28,7 @@ export class BaseballTeam {
   /**
    *Creates an instance of BaseballTeam.
    */
-  constructor(rank = 0, name = "", playGameCount = 0, win = 0, lose = 0, draw = 0, pct = 0.0, gamesBehind = "", remainingGames = 0, run = 0, ra = 0, hr = 0, sb = 0, avg = 0.0, era = 0.0) {
+  constructor(rank = 0, name = "", playGameCount = 0, win = 0, lose = 0, draw = 0, pct = 0.0, gamesBehind = "", remainingGames = 0, run = 0, ra = 0, hr = 0, sb = 0, avg = 0.0, era = 0.0, e = 0) {
     this.rank = rank;
     this.name = name;
     this.playGameCount = playGameCount;
@@ -43,6 +44,7 @@ export class BaseballTeam {
     this.sb = sb;
     this.avg = avg;
     this.era = era;
+    this.e = e;
     this.pythagenPat = this.calcPythagenPat;
   }
 }

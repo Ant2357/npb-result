@@ -59,6 +59,7 @@ export const standings = async (leagueName: string) => {
     const sb = Number(domNullFiletr(tableRows[i].querySelector(`td:nth-child(${13 - Number(isOP)})`)));
     const avg = Number(domNullFiletr(tableRows[i].querySelector(`td:nth-child(${14 - Number(isOP)})`)));
     const era = Number(domNullFiletr(tableRows[i].querySelector(`td:nth-child(${15 - Number(isOP)})`)));
+    const e = Number(domNullFiletr(tableRows[i].querySelector(`td:nth-child(${16 - Number(isOP)})`)));
 
     let team = new BaseballTeam(
       rank,
@@ -75,7 +76,8 @@ export const standings = async (leagueName: string) => {
       hr,
       sb,
       avg,
-      era
+      era,
+      e
     );
     teams.push(team);
   }

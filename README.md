@@ -16,39 +16,41 @@ node ./lib/main.js
 [
   {
     "rank": 1,
-    "name": "ヤクルト",
-    "playGameCount": 3,
-    "win": 2,
-    "lose": 0,
-    "draw": 1,
-    "pct": 1,
+    "name": "中日",
+    "playGameCount": 13,
+    "win": 8,
+    "lose": 3,
+    "draw": 2,
+    "pct": 0.727,
     "gamesBehind": "-",
-    "remainingGames": 140,
-    "run": 13,
-    "ra": 7,
-    "hr": 1,
-    "sb": 3,
-    "avg": 0.29,
-    "era": 2.1,
-    "pythagenPat": 0.744
+    "remainingGames": 130,
+    "run": 38,
+    "ra": 26,
+    "hr": 5,
+    "sb": 1,
+    "avg": 0.24,
+    "era": 1.83,
+    "e": 4,
+    "pythagenPat": 0.646
   },
   {
     "rank": 2,
-    "name": "DeNA",
-    "playGameCount": 3,
-    "win": 2,
-    "lose": 1,
+    "name": "巨人",
+    "playGameCount": 13,
+    "win": 8,
+    "lose": 5,
     "draw": 0,
-    "pct": 0.667,
-    "gamesBehind": "0.5",
-    "remainingGames": 140,
-    "run": 11,
-    "ra": 9,
-    "hr": 2,
-    "sb": 1,
-    "avg": 0.294,
-    "era": 2,
-    "pythagenPat": 0.586
+    "pct": 0.615,
+    "gamesBehind": "1",
+    "remainingGames": 130,
+    "run": 44,
+    "ra": 29,
+    "hr": 7,
+    "sb": 6,
+    "avg": 0.253,
+    "era": 1.95,
+    "e": 4,
+    "pythagenPat": 0.665
   },
   .
   .
@@ -56,11 +58,16 @@ node ./lib/main.js
 ]
 ```
 
-## View Savings Graphs
+## View Graphs
 ```bash
 npx serve
 ```
-![貯金グラフの画面](example.png "貯金グラフの画面")
+
+### Savings Graph
+![貯金グラフの画面](savingsGraph.png "貯金グラフの画面")
+
+### PythagenPat Graph
+![ピタゴラス勝率の画面](pythagenPatGraph.png "ピタゴラス勝率の画面")
 
 ## Author
 [@ant2357](https://twitter.com/ant2357)

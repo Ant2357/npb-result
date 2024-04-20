@@ -1,4 +1,4 @@
-import { JSDOM } from "jsdom";
+import * as cheerio  from "cheerio";
 import { BaseballTeam } from "./baseballTeam";
 
 /**
@@ -27,39 +27,34 @@ export const standings = async (leagueName: string) => {
   const url = "https://baseball.yahoo.co.jp/npb/standings/detail/"
     + leagueUrls[(typeof leagueUrls[leagueName] === "undefined" ? "CL" : leagueName)];
 
-  const dom = await JSDOM.fromURL(url);
-  const document = dom.window.document;
-  const tableRows = document.querySelectorAll('.bb-rankTable > tbody > tr');
+  const response = await fetch(url); 
+  const data = await response.text();
+  const $ = cheerio.load(data);
 
   let teams: BaseballTeam[] = [];
   const isOP = leagueName === "OP";
-  const domNullFiletr = (element: Element | null) => {
-    if (element!== null && element.textContent !== null) {
-      return element.textContent.trim();
-    }
-    return "";
-  }
-  for (let i = 0; i < tableRows.length; i++) {
-    const rank = Number(domNullFiletr(tableRows[i]?.querySelector('td:nth-child(1)')));
-    const name = domNullFiletr(tableRows[i].querySelector('td:nth-child(2)'));
-    const playGameCount = Number(domNullFiletr(tableRows[i].querySelector('td:nth-child(3)')));
-    const win = Number(domNullFiletr(tableRows[i].querySelector('td:nth-child(4)')));
-    const lose = Number(domNullFiletr(tableRows[i].querySelector('td:nth-child(5)')));
-    const draw = Number(domNullFiletr(tableRows[i].querySelector('td:nth-child(6)')));
-    const pct = Number(domNullFiletr(tableRows[i].querySelector('td:nth-child(7)')));
-    const gamesBehind = domNullFiletr(tableRows[i].querySelector('td:nth-child(8)'));
+  $('.bb-rankTable > tbody > tr').each((_, teamDom) => {
+    const rank = Number($(teamDom).find('td:nth-child(1)').text());
+    const name = $(teamDom).find('td:nth-child(2)').text().trim();
+    const playGameCount = Number($(teamDom).find('td:nth-child(3)').text());
+    const win = Number($(teamDom).find('td:nth-child(4)').text());
+    const lose = Number($(teamDom).find('td:nth-child(5)').text());
+    const draw = Number($(teamDom).find('td:nth-child(6)').text());
+    const pct = Number($(teamDom).find('td:nth-child(7)').text());
+    const gamesBehind = $(teamDom).find('td:nth-child(8)').text();
 
     // Webスクレイピング先の順位表にて、
     // オープン戦だけ残試合数表記がないという仕様の為調整
-    // ※ isオープン戦 ? index - 1 : index - 0;
-    const remainingGames = !isOP ? Number(domNullFiletr(tableRows[i].querySelector('td:nth-child(9)'))) : 0;
-    const run = Number(domNullFiletr(tableRows[i].querySelector(`td:nth-child(${10 - Number(isOP)})`)));
-    const ra = Number(domNullFiletr(tableRows[i].querySelector(`td:nth-child(${11 - Number(isOP)})`)));
-    const hr = Number(domNullFiletr(tableRows[i].querySelector(`td:nth-child(${12 - Number(isOP)})`)));
-    const sb = Number(domNullFiletr(tableRows[i].querySelector(`td:nth-child(${13 - Number(isOP)})`)));
-    const avg = Number(domNullFiletr(tableRows[i].querySelector(`td:nth-child(${14 - Number(isOP)})`)));
-    const era = Number(domNullFiletr(tableRows[i].querySelector(`td:nth-child(${15 - Number(isOP)})`)));
-    const e = Number(domNullFiletr(tableRows[i].querySelector(`td:nth-child(${16 - Number(isOP)})`)));
+    const remainingGames = isOP ? 0 : Number($(teamDom).find('td:nth-child(9)').text());
+
+    // ※ isオープン戦 ? index - 1 : index;
+    const run = Number($(teamDom).find(`td:nth-child(${10 - Number(isOP)})`).text());
+    const ra = Number($(teamDom).find(`td:nth-child(${11 - Number(isOP)})`).text());
+    const hr = Number($(teamDom).find(`td:nth-child(${12 - Number(isOP)})`).text());
+    const sb = Number($(teamDom).find(`td:nth-child(${13 - Number(isOP)})`).text());
+    const avg = Number($(teamDom).find(`td:nth-child(${14 - Number(isOP)})`).text());
+    const era = Number($(teamDom).find(`td:nth-child(${15 - Number(isOP)})`).text());
+    const e = Number($(teamDom).find(`td:nth-child(${16 - Number(isOP)})`).text());
 
     let team = new BaseballTeam(
       rank,
@@ -80,7 +75,7 @@ export const standings = async (leagueName: string) => {
       e
     );
     teams.push(team);
-  }
+  });
 
   return teams;
 }

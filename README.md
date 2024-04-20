@@ -1,16 +1,18 @@
-npb-web-scraping
+npb-result (NPB Web API)
 ===
 
-プロ野球の記録を JSONファイルに書き出すコードです。
+日本プロ野球の順位表情報を返す Web API です。
 
 ## Usage
-```bash
-git clone https://github.com/Ant2357/npb-web-scraping.git
-cd npb-web-scraping
-npm i
-npm run build
-node ./lib/main.js
-```
+`GET https://npb-result.ant-npb.workers.dev/api/cl`  
+or  
+`GET https://npb-result.ant-npb.workers.dev/api/pl`  
+or  
+`GET https://npb-result.ant-npb.workers.dev/api/cp`  
+or  
+`GET https://npb-result.ant-npb.workers.dev/api/op`  
+
+
 ## Result
 ```
 [
@@ -57,17 +59,6 @@ node ./lib/main.js
   .
 ]
 ```
-
-## View Graphs
-```bash
-npx serve
-```
-
-### Savings Graph
-![貯金グラフの画面](savingsGraph.png "貯金グラフの画面")
-
-### PythagenPat Graph
-![ピタゴラス勝率の画面](pythagenPatGraph.png "ピタゴラス勝率の画面")
 
 ## Author
 [@ant2357](https://twitter.com/ant2357)

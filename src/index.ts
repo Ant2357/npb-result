@@ -43,7 +43,7 @@ const updateDBStandings = async (env: Env, leagueName: string, teams: BaseballTe
 }
 
 export default {
-  async scheduler(event: Event, env: Env, ctx: ExecutionContext): Promise<void> {
+  async scheduled(event: Event, env: Env, ctx: ExecutionContext): Promise<void> {
     const cl = await npb.standings("CL");
     const pl = await npb.standings("PL");
     const cp = await npb.standings("CP");

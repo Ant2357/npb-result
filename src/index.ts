@@ -43,18 +43,6 @@ const updateDBStandings = async (env: Env, leagueName: string, teams: BaseballTe
 }
 
 export default {
-  async scheduled(event: Event, env: Env, ctx: ExecutionContext): Promise<void> {
-    const cl = await npb.standings("CL");
-    const pl = await npb.standings("PL");
-    const cp = await npb.standings("CP");
-    const op = await npb.standings("OP");
-
-    updateDBStandings(env, "central_league", cl);
-    updateDBStandings(env, "pacific_league", pl);
-    updateDBStandings(env, "interleague_game", cp);
-    updateDBStandings(env, "exhibition_game", op);
-  },
-
   async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
     const { pathname } = new URL(request.url);
 
@@ -102,4 +90,17 @@ export default {
       { title: 'Exhibition Game', url: "api/op" }
     ]);
   },
-};
+
+  async scheduled(event: ScheduledEvent, env: Env, ctx: ExecutionContext): Promise<void> {
+    const cl = await npb.standings("CL");
+    const pl = await npb.standings("PL");
+    const cp = await npb.standings("CP");
+    const op = await npb.standings("OP");
+
+    updateDBStandings(env, "central_league", cl);
+    updateDBStandings(env, "pacific_league", pl);
+    updateDBStandings(env, "interleague_game", cp);
+    updateDBStandings(env, "exhibition_game", op);
+  },
+
+}

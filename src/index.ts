@@ -97,10 +97,10 @@ export default {
     const cp = await npb.standings("CP");
     const op = await npb.standings("OP");
 
-    updateDBStandings(env, "central_league", cl);
-    updateDBStandings(env, "pacific_league", pl);
-    updateDBStandings(env, "interleague_game", cp);
-    updateDBStandings(env, "exhibition_game", op);
+    await updateDBStandings(env, "central_league", cl);
+    await updateDBStandings(env, "pacific_league", pl);
+    await updateDBStandings(env, "interleague_game", cp);
+    await updateDBStandings(env, "exhibition_game", op);
   },
 
 }

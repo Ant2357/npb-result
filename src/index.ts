@@ -84,10 +84,10 @@ export default {
 
 
     return Response.json([
-      { title: 'Central League', url: "api/cl" },
-      { title: 'Pacific League', url: "api/pl" },
-      { title: 'Interleague Play', url: "api/cp" },
-      { title: 'Exhibition Game', url: "api/op" }
+      { title: 'Central League', url: "/api/cl" },
+      { title: 'Pacific League', url: "/api/pl" },
+      { title: 'Interleague Play', url: "/api/cp" },
+      { title: 'Exhibition Game', url: "/api/op" }
     ]);
   },
 

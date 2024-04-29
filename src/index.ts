@@ -44,6 +44,12 @@ const updateDBStandings = async (env: Env, leagueName: string, teams: BaseballTe
 
 export default {
   async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+    const corsHeaders = {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET,HEAD,POST,OPTIONS",
+      "Access-Control-Max-Age": "86400",
+    };
+
     const { pathname } = new URL(request.url);
 
     // セ・リーグ
@@ -52,7 +58,7 @@ export default {
         "SELECT * FROM central_league"
       ).all();
 
-      return Response.json(results);
+      return Response.json(results, { headers: corsHeaders });
     }
 
     // パ・リーグ
@@ -61,7 +67,7 @@ export default {
         "SELECT * FROM pacific_league"
       ).all();
 
-      return Response.json(results);
+      return Response.json(results, { headers: corsHeaders });
     }
 
     // セ・パ交流戦
@@ -70,7 +76,7 @@ export default {
         "SELECT * FROM interleague_game"
       ).all();
 
-      return Response.json(results);
+      return Response.json(results, { headers: corsHeaders });
     }
 
     // オープン線
@@ -79,7 +85,7 @@ export default {
         "SELECT * FROM exhibition_game"
       ).all();
 
-      return Response.json(results);
+      return Response.json(results, { headers: corsHeaders });
     }
 
 

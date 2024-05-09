@@ -45,7 +45,7 @@ export const standings = async (leagueName: string) => {
 
     // Webスクレイピング先の順位表にて、
     // オープン戦だけ残試合数表記がないという仕様の為調整
-    const remainingGames = isOP ? 0 : Number($(teamDom).find('td:nth-child(9)').text());
+    const remainingGames = isOP ? -1 : Number($(teamDom).find('td:nth-child(9)').text());
 
     // ※ isオープン戦 ? index - 1 : index;
     const run = Number($(teamDom).find(`td:nth-child(${10 - Number(isOP)})`).text());

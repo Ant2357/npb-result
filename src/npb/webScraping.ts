@@ -5,10 +5,12 @@ import { BaseballTeam } from "./baseballTeam";
  * 順位表
  * 
  * 対応しているリーグ:
- * セリーグ: CL,
- * パリーグ: PL,
- * セ・パ交流戦: CP,
+ * セリーグ: CL
+ * パリーグ: PL
+ * セ・パ交流戦: CP
  * オープン戦: OP
+ * イースタンリーグ: E
+ * ウエスタンリーグ: W
  * @param {String} leagueName
  * @returns {Promise<BaseballTeam[]>}
  */
@@ -21,7 +23,9 @@ export const standings = async (leagueName: string) => {
     "CL": "1",
     "PL": "2",
     "CP": "26",
-    "OP": "5"
+    "OP": "5",
+    "E": "60",
+    "W": "61"
   };
 
   const url = "https://baseball.yahoo.co.jp/npb/standings/detail/"
@@ -32,7 +36,7 @@ export const standings = async (leagueName: string) => {
   const $ = cheerio.load(data);
 
   let teams: BaseballTeam[] = [];
-  const isOP = leagueName === "OP";
+  const isSkipRemainingGames = leagueName === "OP" || leagueName === "E" || leagueName === "W";
   $('.bb-rankTable > tbody > tr').each((_, teamDom) => {
     const rank = Number($(teamDom).find('td:nth-child(1)').text());
     const name = $(teamDom).find('td:nth-child(2)').text().trim();
@@ -44,17 +48,17 @@ export const standings = async (leagueName: string) => {
     const gamesBehind = $(teamDom).find('td:nth-child(8)').text();
 
     // Webスクレイピング先の順位表にて、
-    // オープン戦だけ残試合数表記がないという仕様の為調整
-    const remainingGames = isOP ? -1 : Number($(teamDom).find('td:nth-child(9)').text());
+    // 一部リーグに残試合数表記がないという仕様の為調整
+    const remainingGames = isSkipRemainingGames ? -1 : Number($(teamDom).find('td:nth-child(9)').text());
 
-    // ※ isオープン戦 ? index - 1 : index;
-    const run = Number($(teamDom).find(`td:nth-child(${10 - Number(isOP)})`).text());
-    const ra = Number($(teamDom).find(`td:nth-child(${11 - Number(isOP)})`).text());
-    const hr = Number($(teamDom).find(`td:nth-child(${12 - Number(isOP)})`).text());
-    const sb = Number($(teamDom).find(`td:nth-child(${13 - Number(isOP)})`).text());
-    const avg = Number($(teamDom).find(`td:nth-child(${14 - Number(isOP)})`).text());
-    const era = Number($(teamDom).find(`td:nth-child(${15 - Number(isOP)})`).text());
-    const e = Number($(teamDom).find(`td:nth-child(${16 - Number(isOP)})`).text());
+    // ※ 残試合数をSkipするか ? index - 1 : index;
+    const run = Number($(teamDom).find(`td:nth-child(${10 - Number(isSkipRemainingGames)})`).text());
+    const ra = Number($(teamDom).find(`td:nth-child(${11 - Number(isSkipRemainingGames)})`).text());
+    const hr = Number($(teamDom).find(`td:nth-child(${12 - Number(isSkipRemainingGames)})`).text());
+    const sb = Number($(teamDom).find(`td:nth-child(${13 - Number(isSkipRemainingGames)})`).text());
+    const avg = Number($(teamDom).find(`td:nth-child(${14 - Number(isSkipRemainingGames)})`).text());
+    const era = Number($(teamDom).find(`td:nth-child(${15 - Number(isSkipRemainingGames)})`).text());
+    const e = Number($(teamDom).find(`td:nth-child(${16 - Number(isSkipRemainingGames)})`).text());
 
     let team = new BaseballTeam(
       rank,

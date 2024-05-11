@@ -3,15 +3,25 @@ npb-result(NPB Web API)
 
 日本プロ野球の順位表情報を返す Web API です。
 
-## Usage
-`GET https://npb-result.ant-npb.workers.dev/api/cl`  
-or  
-`GET https://npb-result.ant-npb.workers.dev/api/pl`  
-or  
-`GET https://npb-result.ant-npb.workers.dev/api/cp`  
-or  
-`GET https://npb-result.ant-npb.workers.dev/api/op`  
+## 使い方
 
+### Central League(セ・リーグ)
+`GET https://npb-result.ant-npb.workers.dev/api/cl`
+
+### Pacific League(パ・リーグ)
+`GET https://npb-result.ant-npb.workers.dev/api/pl`
+
+### Interleague Game(セ・パ交流戦)
+`GET https://npb-result.ant-npb.workers.dev/api/cp`
+
+### Exhibition Game(オープン戦)
+`GET https://npb-result.ant-npb.workers.dev/api/op`
+
+### Eastern League(イースタンリーグ)
+`GET https://npb-result.ant-npb.workers.dev/api/farm/e`
+
+### Western League(ウエスタンリーグ)
+`GET https://npb-result.ant-npb.workers.dev/api/farm/w`
 
 ## Result
 ```

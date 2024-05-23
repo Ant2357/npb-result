@@ -17,12 +17,6 @@ npb-result(NPB Web API)
 ### Exhibition Game(オープン戦)
 `GET https://npb-result.ant-npb.workers.dev/api/op`
 
-### Eastern League(イースタンリーグ)
-`GET https://npb-result.ant-npb.workers.dev/api/farm/e`
-
-### Western League(ウエスタンリーグ)
-`GET https://npb-result.ant-npb.workers.dev/api/farm/w`
-
 ## Result
 ```
 [

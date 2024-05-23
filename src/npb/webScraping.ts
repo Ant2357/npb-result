@@ -9,8 +9,6 @@ import { BaseballTeam } from "./baseballTeam";
  * パリーグ: PL
  * セ・パ交流戦: CP
  * オープン戦: OP
- * イースタンリーグ: E
- * ウエスタンリーグ: W
  * @param {String} leagueName
  * @returns {Promise<BaseballTeam[]>}
  */
@@ -23,9 +21,7 @@ export const standings = async (leagueName: string) => {
     "CL": "1",
     "PL": "2",
     "CP": "26",
-    "OP": "5",
-    "E": "60",
-    "W": "61"
+    "OP": "5"
   };
 
   const url = "https://baseball.yahoo.co.jp/npb/standings/detail/"
@@ -36,7 +32,7 @@ export const standings = async (leagueName: string) => {
   const $ = cheerio.load(data);
 
   let teams: BaseballTeam[] = [];
-  const isSkipRemainingGames = leagueName === "OP" || leagueName === "E" || leagueName === "W";
+  const isSkipRemainingGames = leagueName === "OP";
   $('.bb-rankTable > tbody > tr').each((_, teamDom) => {
     const rank = Number($(teamDom).find('td:nth-child(1)').text());
     const name = $(teamDom).find('td:nth-child(2)').text().trim();

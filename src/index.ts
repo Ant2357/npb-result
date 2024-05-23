@@ -88,34 +88,11 @@ export default {
       return Response.json(results, { headers: corsHeaders });
     }
 
-
-    // ファーム
-    // イースタンリーグ
-    if (pathname === "/api/farm/e") {
-      const { results } = await env.DB.prepare(
-        "SELECT * FROM eastern_league"
-      ).all();
-
-      return Response.json(results, { headers: corsHeaders });
-    }
-
-    // ウエスタンリーグ
-    if (pathname === "/api/farm/w") {
-      const { results } = await env.DB.prepare(
-        "SELECT * FROM western_league"
-      ).all();
-
-      return Response.json(results, { headers: corsHeaders });
-    }
-
-
     return Response.json([
       { title: 'Central League', url: "/api/cl" },
       { title: 'Pacific League', url: "/api/pl" },
       { title: 'Interleague Play', url: "/api/cp" },
-      { title: 'Exhibition Game', url: "/api/op" },
-      { title: 'Eastern League', url: "/api/farm/e" },
-      { title: 'Western League', url: "/api/farm/w" }
+      { title: 'Exhibition Game', url: "/api/op" }
     ]);
   },
 
@@ -129,9 +106,6 @@ export default {
     await updateDBStandings(env, "pacific_league", pl);
     await updateDBStandings(env, "interleague_game", cp);
     await updateDBStandings(env, "exhibition_game", op);
-
-    await updateDBStandings(env, "eastern_league", await npb.standings("E"));
-    await updateDBStandings(env, "western_league", await npb.standings("W"));
   },
 
 }

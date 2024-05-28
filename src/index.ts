@@ -81,9 +81,40 @@ export default {
 
     // オープン線
     if (pathname === "/api/op") {
-      const { results } = await env.DB.prepare(
+      let { results } = await env.DB.prepare(
         "SELECT * FROM exhibition_game"
       ).all();
+
+      // 現時点での Webスクレイピング先に無い指標を削除
+      results.forEach(team => { delete team.remainingGames; });
+
+      return Response.json(results, { headers: corsHeaders });
+    }
+
+
+    // ファーム
+    // イースタンリーグ
+    if (pathname === "/api/el") {
+      let results = await npb.farmStandings("E");
+
+      // 現時点での Webスクレイピング先に無い指標を削除
+      results.forEach(team => {
+        delete team.remainingGames;
+        delete team.e;
+      });
+
+      return Response.json(results, { headers: corsHeaders });
+    };
+
+    // ウエスタンリーグ
+    if (pathname === "/api/wl") {
+      let results = await npb.farmStandings("W");
+
+      // 現時点での Webスクレイピング先に無い指標を削除
+      results.forEach(team => {
+        delete team.remainingGames;
+        delete team.e;
+      });
 
       return Response.json(results, { headers: corsHeaders });
     }
@@ -92,7 +123,10 @@ export default {
       { title: 'Central League', url: "/api/cl" },
       { title: 'Pacific League', url: "/api/pl" },
       { title: 'Interleague Play', url: "/api/cp" },
-      { title: 'Exhibition Game', url: "/api/op" }
+      { title: 'Exhibition Game', url: "/api/op" },
+
+      { title: 'Eastern League', url: "/api/el" },
+      { title: 'Western League', url: "/api/wl" },
     ]);
   },
 
@@ -102,10 +136,17 @@ export default {
     const cp = await npb.standings("CP");
     const op = await npb.standings("OP");
 
+    // ファーム
+    const el = await npb.farmStandings("E");
+    const wl = await npb.farmStandings("W");
+
     await updateDBStandings(env, "central_league", cl);
     await updateDBStandings(env, "pacific_league", pl);
     await updateDBStandings(env, "interleague_game", cp);
     await updateDBStandings(env, "exhibition_game", op);
+
+    await updateDBStandings(env, "eastern_league", el);
+    await updateDBStandings(env, "western_league", wl);
   },
 
 }

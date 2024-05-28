@@ -8,14 +8,14 @@ export class BaseballTeam {
   draw: number;
   pct: number;
   gamesBehind: string;
-  remainingGames: number;
+  remainingGames?: number;
   run: number;
   ra: number;
   hr: number;
   sb: number;
   avg: number;
   era: number;
-  e: number;
+  e?: number;
   pythagenPat: number;
   // Webスクレイピング先に無い独自値
   // Pythagenpat(ピタゴラス勝率の改良型)

@@ -1,6 +1,6 @@
 
 export class BaseballTeam {
-  rank: number | string;
+  rank: number;
   name: string;
   playGameCount: number;
   win: number;
@@ -28,8 +28,8 @@ export class BaseballTeam {
   /**
    *Creates an instance of BaseballTeam.
    */
-  constructor(rank: number | string = 0, name = "", playGameCount = 0, win = 0, lose = 0, draw = 0, pct = 0.0, gamesBehind = "", remainingGames = 0, run = 0, ra = 0, hr = 0, sb = 0, avg = 0.0, era = 0.0, e = 0) {
-    this.rank = rank === "優勝" ? 1 : rank;
+  constructor(rank = 0, name = "", playGameCount = 0, win = 0, lose = 0, draw = 0, pct = 0.0, gamesBehind = "", remainingGames = 0, run = 0, ra = 0, hr = 0, sb = 0, avg = 0.0, era = 0.0, e = 0) {
+    this.rank = Number.isNaN(rank) ? 1 : rank;
     this.name = name;
     this.playGameCount = playGameCount;
     this.win = win;

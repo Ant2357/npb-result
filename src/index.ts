@@ -136,9 +136,14 @@ export default {
     const cp = await npb.standings("CP");
     const op = await npb.standings("OP");
 
-    // ファーム
+    // 二軍リーグ
     const el = await npb.farmStandings("E");
     const wl = await npb.farmStandings("W");
+
+    // 順位結果が取得出来なかった際は更新を行わない
+    if (cl.length === 0) {
+      return;
+    }
 
     await updateDBStandings(env, "central_league", cl);
     await updateDBStandings(env, "pacific_league", pl);

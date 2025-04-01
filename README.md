@@ -73,12 +73,91 @@ GET https://npb-result.ant-npb.workers.dev/api/cl
     "e": 1,
     "pythagenPat": 0.693
   },
-  ……
+  {
+    "id": 3,
+    "rank": 2,
+    "name": "DeNA",
+    "playGameCount": 3,
+    "win": 2,
+    "lose": 1,
+    "draw": 0,
+    "pct": 0.667,
+    "gamesBehind": "0",
+    "remainingGames": 140,
+    "run": 7,
+    "ra": 2,
+    "hr": 2,
+    "sb": 1,
+    "avg": 0.186,
+    "era": 0.67,
+    "e": 1,
+    "pythagenPat": 0.848
+  },
+  {
+    "id": 4,
+    "rank": 4,
+    "name": "広島",
+    "playGameCount": 3,
+    "win": 1,
+    "lose": 2,
+    "draw": 0,
+    "pct": 0.333,
+    "gamesBehind": "1",
+    "remainingGames": 140,
+    "run": 4,
+    "ra": 7,
+    "hr": 0,
+    "sb": 0,
+    "avg": 0.258,
+    "era": 2.33,
+    "e": 0,
+    "pythagenPat": 0.307
+  },
+  {
+    "id": 5,
+    "rank": 4,
+    "name": "中日",
+    "playGameCount": 3,
+    "win": 1,
+    "lose": 2,
+    "draw": 0,
+    "pct": 0.333,
+    "gamesBehind": "0",
+    "remainingGames": 140,
+    "run": 2,
+    "ra": 7,
+    "hr": 0,
+    "sb": 1,
+    "avg": 0.2,
+    "era": 2.52,
+    "e": 2,
+    "pythagenPat": 0.152
+  },
+  {
+    "id": 6,
+    "rank": 6,
+    "name": "ヤクルト",
+    "playGameCount": 3,
+    "win": 0,
+    "lose": 3,
+    "draw": 0,
+    "pct": 0,
+    "gamesBehind": "1",
+    "remainingGames": 140,
+    "run": 5,
+    "ra": 21,
+    "hr": 1,
+    "sb": 0,
+    "avg": 0.182,
+    "era": 6.31,
+    "e": 1,
+    "pythagenPat": 0.065
+  }
 ]
 ```
 
 > [!WARNING]
-> オープン戦・二軍リーグに関しては remainingGames(残試合) を返しません
+> オープン戦・二軍リーグでは remainingGames(残試合) を返しません
 
 ## Author
 [@ant2357](https://twitter.com/ant2357)

@@ -17,13 +17,6 @@ npb-result(NPB Web API)
 ### Exhibition Game(オープン戦)
 `GET https://npb-result.ant-npb.workers.dev/api/op`
 
-### Eastern League(イースタンリーグ)
-`GET https://npb-result.ant-npb.workers.dev/api/el`
-
-### Western League(ウエスタンリーグ)
-`GET https://npb-result.ant-npb.workers.dev/api/wl`
-
-
 ## Example
 
 ### Request
@@ -157,7 +150,7 @@ GET https://npb-result.ant-npb.workers.dev/api/cl
 ```
 
 > [!WARNING]
-> オープン戦・二軍リーグでは remainingGames(残試合) を返しません
+> オープン戦では remainingGames(残試合) を返しません
 
 ## Author
 [@ant2357](https://twitter.com/ant2357)

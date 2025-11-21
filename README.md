@@ -1,7 +1,14 @@
-npb-result(NPB Web API)
-===
+<h2 align="center">
+  npb-result(NPB Web API)
+</h2>
 
-日本プロ野球の順位表情報を返す Web API です。
+<div align="center">
+  <img alt="野球場で野球をしている野球選手達が描かれたドット絵(ロゴ画像)" src="logo.png" width="200" height="200">
+</div>
+
+<div align="center">
+  <p>日本プロ野球の順位表情報を返す Web API です。 </p>
+</div>
 
 ## Usage
 
@@ -154,3 +161,6 @@ GET https://npb-result.ant-npb.workers.dev/api/cl
 
 ## Author
 [@ant2357](https://twitter.com/ant2357)
+
+## License
+[MIT license](https://en.wikipedia.org/wiki/MIT_License)

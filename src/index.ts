@@ -10,6 +10,7 @@
 
 import { BaseballTeam } from "./npb/baseballTeam";
 import * as npb from "./npb/webScraping";
+import { updateDBStandings, selectAll } from "./dbClient";
 export interface Env {
   // Example binding to KV. Learn more at https://developers.cloudflare.com/workers/runtime-apis/kv/
   // MY_KV_NAMESPACE: KVNamespace;
@@ -29,19 +30,6 @@ export interface Env {
   DB: D1Database;
 }
 
-const updateDBStandings = async (env: Env, leagueName: string, teams: BaseballTeam[]): Promise<void> => {
-  await env.DB.prepare(`DELETE FROM ${leagueName}`).run();
-  for (const team of teams) {
-    await env.DB.prepare(
-      `INSERT INTO ${leagueName}
-      (rank, name, playGameCount, win, lose, draw, pct, gamesBehind, remainingGames, run, ra, hr, sb, avg, era, e, pythagenPat)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
-    ).bind(
-      team.rank, team.name, team.playGameCount, team.win, team.lose, team.draw, team.pct, team.gamesBehind, team.remainingGames, team.run, team.ra, team.hr, team.sb, team.avg, team.era, team.e, team.pythagenPat
-    ).run();
-  }
-}
-
 export default {
   async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
     const corsHeaders = {
@@ -54,39 +42,28 @@ export default {
 
     // セ・リーグ
     if (pathname === "/api/cl") {
-      const { results } = await env.DB.prepare(
-        "SELECT * FROM central_league"
-      ).all();
-
+      const results = await selectAll(env.DB, "central_league");
       return Response.json(results, { headers: corsHeaders });
     }
 
     // パ・リーグ
     if (pathname === "/api/pl") {
-      const { results } = await env.DB.prepare(
-        "SELECT * FROM pacific_league"
-      ).all();
-
+      const results = await selectAll(env.DB, "pacific_league");
       return Response.json(results, { headers: corsHeaders });
     }
 
     // セ・パ交流戦
     if (pathname === "/api/cp") {
-      const { results } = await env.DB.prepare(
-        "SELECT * FROM interleague_game"
-      ).all();
-
+      const results = await selectAll(env.DB, "interleague_game");
       return Response.json(results, { headers: corsHeaders });
     }
 
     // オープン線
     if (pathname === "/api/op") {
-      let { results } = await env.DB.prepare(
-        "SELECT * FROM exhibition_game"
-      ).all();
+      let results = await selectAll(env.DB, "exhibition_game");
 
-      // 現時点での Webスクレイピング先に無い指標を削除
-      results.forEach(team => { delete team.remainingGames; });
+      // 現時点で Webスクレイピング先に無い指標の削除
+      results.forEach((team) => { delete team.remainingGames; });
 
       return Response.json(results, { headers: corsHeaders });
     }
@@ -110,9 +87,10 @@ export default {
       return;
     }
 
-    await updateDBStandings(env, "central_league", cl);
-    await updateDBStandings(env, "pacific_league", pl);
-    await updateDBStandings(env, "interleague_game", cp);
-    await updateDBStandings(env, "exhibition_game", op);
+    // updateDBStandings は内部でテーブル名検証を行っているため直接渡してOK
+    await updateDBStandings(env.DB, "central_league", cl);
+    await updateDBStandings(env.DB, "pacific_league", pl);
+    await updateDBStandings(env.DB, "interleague_game", cp);
+    await updateDBStandings(env.DB, "exhibition_game", op);
   },
 }

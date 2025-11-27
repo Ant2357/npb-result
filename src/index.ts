@@ -8,7 +8,6 @@
  * Learn more at https://developers.cloudflare.com/workers/
  */
 
-import { BaseballTeam } from "./npb/baseballTeam";
 import * as npb from "./npb/webScraping";
 import { updateDBStandings, selectAll } from "./dbClient";
 export interface Env {

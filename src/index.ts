@@ -82,11 +82,11 @@ export default {
     const op = await npb.standings("OP");
 
     // 順位結果が取得出来なかった際は更新を行わない
-    if (cl.length === 0) {
+    if (op.length === 0) {
       return;
     }
 
-    // updateDBStandings は内部でテーブル名検証を行っているため直接渡してOK
+    // 順位表を更新
     await updateDBStandings(env.DB, "central_league", cl);
     await updateDBStandings(env.DB, "pacific_league", pl);
     await updateDBStandings(env.DB, "interleague_game", cp);
